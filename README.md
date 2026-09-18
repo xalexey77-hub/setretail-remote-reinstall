@@ -18,7 +18,7 @@
 
 ## Готовые компоненты
 
-- `bin/linux-x86_64/nbd-client` - статически собранный x86-64 Linux NBD client.
+- `bin/linux-x86_64/nbd-client-2048-ipv4` - проверенный статический x86-64 Linux NBD client (IPv4, block size 2048). SHA256: `36e8ea733ef5d01aacba839b048ae656a58ea27ca7249450420b2dd47f43f36a`.
 - `bin/windows/nbd-server.ps1` - read-only NBD server для Windows PowerShell.
 - `bin/windows/start-nbd-server.cmd` - launcher.
 - `scripts/` - сборка initramfs, SAFE PREFLIGHT, GRUB и аудит.
@@ -38,8 +38,8 @@
 
 ### Windows: export ISO
 
-```bat
-bin\windows\start-nbd-server.cmd "C:\SetRetail\image.iso" 10810
+```powershell
+.\bin\windows\start-nbd-server.cmd "C:\SetRetail\image.iso" 10810
 ```
 
 Дождитесь `Waiting for NBD client...`. Разрешите входящий TCP `NBD_PORT` в Windows Firewall только от `KSO_IP`. Не используйте `Test-NetConnection`/TCP probe: сервер односессионный.
@@ -49,7 +49,7 @@ bin\windows\start-nbd-server.cmd "C:\SetRetail\image.iso" 10810
 ```bash
 sudo ./scripts/build-nbd-initramfs.sh \
   /mnt/setretail-iso/boot/core.gz \
-  ./bin/linux-x86_64/nbd-client \
+  ./bin/linux-x86_64/nbd-client-2048-ipv4 \
   /boot/setretail-core-nbd-v3.gz
 ```
 
