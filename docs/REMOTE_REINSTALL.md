@@ -42,7 +42,7 @@ PREFLIGHT_PORT = 10022
 - Windows ПК, который останется включённым на всё время установки;
 - SSH-доступ к текущей Linux-системе кассы;
 - этот репозиторий;
-- статический Linux `nbd-client`;
+- проверенный статический Linux `bin/linux-x86_64/nbd-client-2048-ipv4`;
 - возможность перезагрузить кассу удалённо.
 
 До форматирования отдельно сохраните всё, что нельзя получить заново: индивидуальные сертификаты, VPN-конфигурацию, нестандартные сетевые настройки и локальные данные. В проверенной инфраструктуре, например, OpenVPN использовал `/etc/sysconfig/config-ovpn0` и сертификаты в `/opt/networks/certs/`.
@@ -136,10 +136,10 @@ New-NetFirewallRule `
 
 ## 5. Запустить NBD-сервер
 
-На Windows:
+На Windows откройте **PowerShell** в каталоге репозитория:
 
-```bat
-bin\windows\start-nbd-server.cmd "C:\SetRetail\SR-10.x.x.iso" 10810
+```powershell
+.\bin\windows\start-nbd-server.cmd "C:\SetRetail\SR-10.x.x.iso" 10810
 ```
 
 Ожидаем:
@@ -193,12 +193,26 @@ sha256sum /boot/setretail-vmlinuz
 
 ## 7. Собрать NBD initramfs
 
-Используем **оригинальный `core.gz` именно от устанавливаемого ISO**.
+Используем **оригинальный `core.gz` именно от устанавливаемого ISO** и проверенный бинарник `nbd-client-2048-ipv4` из репозитория.
+
+Перед сборкой обязательно проверяем бинарник:
+
+```bash
+sha256sum ./bin/linux-x86_64/nbd-client-2048-ipv4
+```
+
+Ожидаемый SHA256:
+
+```text
+36e8ea733ef5d01aacba839b048ae656a58ea27ca7249450420b2dd47f43f36a  ./bin/linux-x86_64/nbd-client-2048-ipv4
+```
+
+Если хеш отличается — **не продолжайте установку**.
 
 ```bash
 sudo ./scripts/build-nbd-initramfs.sh \
   /mnt/setretail-iso/boot/core.gz \
-  ./bin/linux-x86_64/nbd-client \
+  ./bin/linux-x86_64/nbd-client-2048-ipv4 \
   /boot/setretail-core-nbd-v3.gz
 ```
 
