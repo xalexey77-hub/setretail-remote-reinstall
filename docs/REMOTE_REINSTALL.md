@@ -59,6 +59,12 @@ PREFLIGHT_PORT=10022
 
 ---
 
+## Важно: команды на Windows выполняются в PowerShell
+
+Все команды этой инструкции, которые относятся к Windows-машине, нужно выполнять в **Windows PowerShell**. Если для конкретного шага требуются права администратора, запускайте PowerShell через **«Запуск от имени администратора»**.
+
+Команды для кассы выполняются отдельно — в Linux shell через SSH.
+
 ## 2. Проверить связь между кассой и Windows
 
 На кассе:
@@ -71,7 +77,7 @@ ping -c 3 <NBD_SERVER_IP>
 
 Ожидается ответ ping. Если касса не видит NBD-сервер, **установку не начинаем**.
 
-На Windows узнайте IP:
+На Windows откройте **PowerShell** и узнайте IP:
 
 ```powershell
 ipconfig
@@ -343,7 +349,7 @@ READ offset=...
 
 ## 12. Подключиться к SAFE PREFLIGHT shell
 
-С Windows:
+На Windows откройте **PowerShell**:
 
 ```powershell
 .\scripts\preflight-client.ps1 -KsoIp <KSO_IP> -Port 10022
