@@ -1,0 +1,26 @@
+name: Build Linux NBD client
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/nbd-client-static.c'
+      - '.github/workflows/build-linux-nbd-client.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build static client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools linux-libc-dev
+          mkdir -p dist
+          musl-gcc -O2 -static -s -o dist/nbd-client src/nbd-client-static.c
+          sha256sum dist/nbd-client | tee dist/SHA256SUMS.txt
+          file dist/nbd-client
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nbd-client-linux-x86_64
+          path: dist/
