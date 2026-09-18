@@ -24,6 +24,16 @@
 - `scripts/` - сборка initramfs, SAFE PREFLIGHT, GRUB и аудит.
 - `docs/` - полная инструкция DOCX/PDF.
 
+## Пошаговая инструкция для первой установки
+
+Если вы раньше не выполняли такую переустановку, используйте подробную инструкцию:
+
+**[docs/REMOTE_REINSTALL.md](docs/REMOTE_REINSTALL.md)**
+
+Она ведёт оператора от проверки IP и Windows Firewall до SAFE PREFLIGHT, проверки ISO, одноразового GRUB boot, реальной установки и действий после первого запуска.
+
+Не начинайте сразу с INSTALL: сначала полностью пройдите SAFE PREFLIGHT.
+
 ## Настройка NBD-сессии
 
 ### Windows: export ISO
